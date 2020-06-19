@@ -37,7 +37,14 @@ export class SingUpComponent implements OnInit {
     private uniqueUsername: UniqueUsername
     ) { }
 
-  ngOnInit(): void {
+  ngOnInit(): void {}
+
+  onSubmit(){
+    if(this.authForm.invalid){
+      return;
+    }
+
+    this.authForm.value;
   }
 
 }
