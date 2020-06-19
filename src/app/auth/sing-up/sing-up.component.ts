@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { MatchPassword } from '../validators/match-password';
+import { UniqueUsername } from '../validators/unique-username';
 
 @Component({
   selector: 'app-sing-up',
@@ -8,12 +10,16 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 })
 export class SingUpComponent implements OnInit {
   authForm = new FormGroup({
-    username: new FormControl('', [
-      Validators.required,
-      Validators.minLength(3),
-      Validators.maxLength(20),
-      Validators.pattern(/^[a-z0-9]+$/)
-    ]),
+    username: new FormControl(
+      '', 
+      [
+        Validators.required,
+        Validators.minLength(3),
+        Validators.maxLength(20),
+        Validators.pattern(/^[a-z0-9]+$/)
+      ], 
+        [this.uniqueUsername.validate]
+    ),
     password: new FormControl('', [
       Validators.required,
       Validators.minLength(4),
@@ -24,9 +30,12 @@ export class SingUpComponent implements OnInit {
       Validators.minLength(4),
       Validators.maxLength(20),
     ])
-  })
+  }, { validators: [this.matchPassword.validate]})
 
-  constructor() { }
+  constructor(
+    private matchPassword: MatchPassword,
+    private uniqueUsername: UniqueUsername
+    ) { }
 
   ngOnInit(): void {
   }
