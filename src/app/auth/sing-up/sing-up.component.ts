@@ -10,47 +10,46 @@ import { AuthService } from '../auth.service';
   styleUrls: ['./sing-up.component.css']
 })
 export class SingUpComponent implements OnInit {
-  authForm = new FormGroup({
-    username: new FormControl(
-      '', 
-      [
+  authForm = new FormGroup(
+    {
+      username: new FormControl(
+        '', 
+        [
+          Validators.required,
+          Validators.minLength(3),
+          Validators.maxLength(20),
+          Validators.pattern(/^[a-z0-9]+$/)
+        ], 
+          [this.uniqueUsername.validate]
+      ),
+      password: new FormControl('', [
         Validators.required,
-        Validators.minLength(3),
+        Validators.minLength(4),
         Validators.maxLength(20),
-        Validators.pattern(/^[a-z0-9]+$/)
-      ], 
-        [this.uniqueUsername.validate]
-    ),
-    password: new FormControl('', [
-      Validators.required,
-      Validators.minLength(4),
-      Validators.maxLength(20),
-    ]),
-    passwordConfirmation:new FormControl('', [
-      Validators.required,
-      Validators.minLength(4),
-      Validators.maxLength(20),
-    ])
-  }, { validators: [this.matchPassword.validate]})
+      ]),
+      passwordConfirmation:new FormControl('', [
+        Validators.required,
+        Validators.minLength(4),
+        Validators.maxLength(20),
+      ])
+    }, { validators: [this.matchPassword.validate]}
+  );
 
   constructor(
       private matchPassword: MatchPassword,
       private uniqueUsername: UniqueUsername,
       private authService: AuthService
-    ) {}
+  ) {}
 
-  ngOnInit(): void {}
+  ngOnInit() {}
 
   onSubmit(){
     if(this.authForm.invalid){
       return;
     }
 
-    this.authService.singup(this.authForm.value).subscribe({
+    this.authService.signup(this.authForm.value).subscribe({
       next: response => {
-
-      },
-      complete(){
 
       },
       error: err => {

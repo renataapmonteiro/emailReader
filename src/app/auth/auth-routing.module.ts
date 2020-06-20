@@ -6,7 +6,7 @@ import { SingInComponent } from './sing-in/sing-in.component';
 
 
 const routes: Routes = [
-  {path: 'singUp', component: SingUpComponent},
+  {path: 'singup', component: SingUpComponent},
   {path: '', component: SingInComponent }
 ];
 

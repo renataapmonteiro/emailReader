@@ -1,43 +1,47 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { SingUpComponent } from './sing-up/sing-up.component';
+import { BehaviorSubject } from 'rxjs';
+import { tap } from 'rxjs/operators';
 
-interface availableUsernameResponse {
+interface UsernameAvailableResponse {
   available: boolean;
 }
 
-interface SingUpCredentials{
-  username: string,
-  password: string,
-  passwordConfirmation: string
+interface SignupCredentials {
+  username: string;
+  password: string;
+  passwordConfirmation: string;
 }
 
-interface SingUpResponse{
-  username: string
+interface SignupResponse {
+  username: string;
 }
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
+  rootUrl = 'https://api.angular-email.com';
+  signedIn$ = new BehaviorSubject(false);
 
-  rootUrl= 'https://api.angular-email.com';
+  constructor(private http: HttpClient) {}
 
-  constructor(private http: HttpClient) { }
-
-  usernameAvailable(username: string){
-    return this.http.post<availableUsernameResponse>(
-      this.rootUrl + '/auth/username', 
+  usernameAvailable(username: string) {
+    return this.http.post<UsernameAvailableResponse>(
+      `${this.rootUrl}/auth/username`,
       {
-        username: username
+        username
       }
-    )
+    );
   }
 
-  singup( credentials: SingUpCredentials){
-    return this.http.pos<SingUpResponse>(
-      this.rootUrl + '/auth/singup',
-      credentials
-    )
+  signup(credentials: SignupCredentials) {
+    return this.http
+      .post<SignupResponse>(`${this.rootUrl}/auth/signup`, credentials)
+      .pipe(
+        tap(() => {
+          this.signedIn$.next(true);
+        })
+      );
   }
 }

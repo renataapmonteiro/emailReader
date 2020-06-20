@@ -4,18 +4,22 @@
 
 
         <div class="right menu">
-            <a routerLink="/inbox" routerLinkActive="active" class="ui item">
-                Inbox
-            </a>
-            <a routerLink="/singOut" routerLinkActive="active" class="ui item">
-                Sing Out
-            </a>
-            <a routerLink="/" routerLinkActive="active" class="ui item">
-                Sing In
-            </a>
-            <a routerLink="/singUp" routerLinkActive="active" class="ui item">
-                Sing Up
-            </a>
+            <ng-container *ngIf="singedIn">
+                <a routerLink="/inbox" routerLinkActive="active" class="ui item">
+                    Inbox
+                </a>
+                <a routerLink="/singOut" routerLinkActive="active" class="ui item">
+                    Sing Out
+                </a>
+            </ng-container>
+            <ng-container *ngIf="!singedIn">
+                <a routerLink="/" routerLinkActive="active" class="ui item">
+                    Sing In
+                </a>
+                <a routerLink="/singup" routerLinkActive="active" class="ui item">
+                    Sing Up
+                </a>
+            </ng-container>
         </div>
     </div>
     <router-outlet></router-outlet>
