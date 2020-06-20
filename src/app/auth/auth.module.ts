@@ -6,10 +6,11 @@ import { AuthRoutingModule } from './auth-routing.module';
 import { SingInComponent } from './sing-in/sing-in.component';
 import { SingUpComponent } from './sing-up/sing-up.component';
 import { SharedModule } from '../shared/shared.module';
+import { SingOutComponent } from './sing-out/sing-out.component';
 
 
 @NgModule({
-  declarations: [SingInComponent, SingUpComponent],
+  declarations: [SingInComponent, SingUpComponent, SingOutComponent],
   imports: [
     CommonModule,
     AuthRoutingModule,
