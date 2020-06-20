@@ -4,16 +4,25 @@
 
 
         <div class="right menu">
-            <ng-container *ngIf="singedIn">
-                <a routerLink="/inbox" routerLinkActive="active" class="ui item">
+            <ng-container *ngIf="singedIn$ | async">
+                <a 
+                    routerLink="/inbox" 
+                    routerLinkActive="active" 
+                    class="ui item"
+                >
                     Inbox
                 </a>
                 <a routerLink="/singOut" routerLinkActive="active" class="ui item">
                     Sing Out
                 </a>
             </ng-container>
-            <ng-container *ngIf="!singedIn">
-                <a routerLink="/" routerLinkActive="active" class="ui item">
+            <ng-container *ngIf="!(singedIn$ | async)">
+                <a 
+                    routerLink="/" 
+                    routerLinkActive="active" 
+                    [routerLinkActiveOptions]="{ exact: true}"
+                    class="ui item"
+                >
                     Sing In
                 </a>
                 <a routerLink="/singup" routerLinkActive="active" class="ui item">
