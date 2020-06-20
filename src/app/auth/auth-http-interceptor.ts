@@ -13,26 +13,13 @@ import { tap, filter } from 'rxjs/operators';
 
 export class AuthHttpInterceptor implements HttpInterceptor {
     intercept(
-            req: HttpRequest<any>, 
-            next:HttpHandler
-        ): Observable<HttpEvent<any>>{
+        req: HttpRequest<any>, 
+        next:HttpHandler
+    ): Observable<HttpEvent<any>>{
+        const modifiedReq = req.clone({
+            withCredentials: true
+        })
 
-            const modifiedReq = req.clone({
-                withCredentials: true
-            })
-
-        return next.handle(modifiedReq).pipe(
-            filter( val => val.type === HttpEventType.Sent),
-
-                tap(val => {
-                    if( val.type === HttpEventType.Sent){
-                        console.log(val);
-                    }
-
-                    if( val.type === HttpEventType.Response){
-                        console.log(val);
-                    }
-                })
-            )
+        return next.handle(modifiedReq);
     };
 }
