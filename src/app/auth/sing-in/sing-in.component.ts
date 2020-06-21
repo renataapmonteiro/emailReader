@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../auth.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { HttpErrorResponse } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 
 
@@ -25,7 +25,7 @@ export class SingInComponent implements OnInit {
     ])
   });
 
-  constructor(private authService: AuthService) { }
+  constructor(private authService: AuthService, private router: Router) { }
 
   ngOnInit(): void {
   }
@@ -36,7 +36,9 @@ export class SingInComponent implements OnInit {
     }
     
     this.authService.signin(this.authForm.value).subscribe({
-      next:() => {},
+      next:() => {
+        this.router.navigateByUrl("/inbox");
+      },
       error: ({ error }) => {
         if (error.username || error.password){
           this.authForm.setErrors({credentials: true});
