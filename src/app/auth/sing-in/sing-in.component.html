@@ -1,12 +1,14 @@
 <h3>Sing In!</h3>
 <form (ngSubmit)="onSubmit()" class="ui form" [formGroup]="authForm">
-    <app-input
+    <app-input 
+        controlType = 'input'
         inputType='text'
         label = 'Username'
         [control]= 'authForm.get("username")'
     >
     </app-input>
-    <app-input
+    <app-input 
+        controlType = 'input'
         inputType='password'
         label = 'Password'
         [control]= 'authForm.get("password")'
