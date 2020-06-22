@@ -2,10 +2,19 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 import { InboxHomeComponent } from './inbox-home/inbox-home.component';
+import { PlaceholderComponent } from './placeholder/placeholder.component';
+import { EmailShowComponent } from './email-show/email-show.component';
 
 
 const routes: Routes = [
-  { path: '', component:InboxHomeComponent }
+  { 
+    path: '', 
+    component:InboxHomeComponent,
+    children:[ 
+      {path: ':id', component: EmailShowComponent},
+      {path: '', component: PlaceholderComponent}
+    ] 
+  }
 ];
 
 @NgModule({
